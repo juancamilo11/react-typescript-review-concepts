@@ -2,31 +2,46 @@ import React from "react";
 import { useState } from "react";
 
 interface CounterProps {
-  counterValue?: number;
+  initialValue?: number;
 }
 
-const Counter = ({ counterValue = 0 }: CounterProps) => {
-  const [counter, setCounter] = useState(counterValue);
+interface CounterAndTimesProps {
+  value: number;
+  clicks: number;
+}
 
-  const handleIncrement = (): void => {
-    setCounter((counter) => counter + counterValue);
+const Counter = ({ initialValue = 0 }: CounterProps) => {
+  const [counter, setCounter] = useState<CounterAndTimesProps>({
+    value: initialValue,
+    clicks: 0,
+  });
+
+  const handleIncrement = (increment: number): void => {
+    setCounter(({ value, clicks }) => ({
+      value: value + increment,
+      clicks: clicks + 1,
+    }));
   };
 
-  const handleDecrement = (): void => {
-    setCounter((counter) => counter - counterValue);
+  const handleDecrement = (decrement: number): void => {
+    setCounter(({ value, clicks }) => ({
+      value: value + decrement,
+      clicks: clicks + 1,
+    }));
   };
 
   return (
     <div>
-      <button onClick={handleIncrement} className="m-2">
+      <button onClick={(e) => handleIncrement(5)} className="m-2">
         Increment
       </button>
 
-      <button onClick={handleDecrement} className="m-2">
+      <button onClick={(e) => handleDecrement(5)} className="m-2">
         Decrement
       </button>
 
-      <span>{counter}</span>
+      <p>Valor actual: {counter.value}</p>
+      <p>Cantidad de clicks: {counter.clicks}</p>
     </div>
   );
 };

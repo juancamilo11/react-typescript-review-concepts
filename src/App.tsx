@@ -6,9 +6,9 @@ import Counter from "./components/Counter";
 function App() {
   return (
     <>
-      <Counter counterValue={2} />
-      <Counter counterValue={5} />
-      <Counter counterValue={10} />
+      <Counter initialValue={2} />
+      <Counter initialValue={5} />
+      <Counter initialValue={10} />
     </>
   );
 }
