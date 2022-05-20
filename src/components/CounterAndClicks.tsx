@@ -10,7 +10,7 @@ interface CounterAndTimesProps {
   clicks: number;
 }
 
-const Counter = ({ initialValue = 0 }: CounterProps) => {
+const CounterAndClicks = ({ initialValue = 0 }: CounterProps) => {
   const [counter, setCounter] = useState<CounterAndTimesProps>({
     value: initialValue,
     clicks: 0,
@@ -32,11 +32,17 @@ const Counter = ({ initialValue = 0 }: CounterProps) => {
 
   return (
     <div>
-      <button onClick={(e) => handleIncrement(5)} className="m-2">
+      <button
+        onClick={(e) => handleIncrement(5)}
+        className="m-2 btn btn-primary"
+      >
         Increment
       </button>
 
-      <button onClick={(e) => handleDecrement(5)} className="m-2">
+      <button
+        onClick={(e) => handleDecrement(5)}
+        className="m-2 btn btn-primary"
+      >
         Decrement
       </button>
 
@@ -46,4 +52,4 @@ const Counter = ({ initialValue = 0 }: CounterProps) => {
   );
 };
 
-export default Counter;
+export default CounterAndClicks;
