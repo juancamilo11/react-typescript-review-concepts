@@ -1,54 +1,74 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import icon from "../assets/images/icon.png";
+
+import EagerPage01 from "../modules/eager-module/pages/EagerPage01";
+import EagerPage02 from "../modules/eager-module/pages/EagerPage02";
+import EagerPage03 from "../modules/eager-module/pages/EagerPage03";
+import LazyPage01 from "../modules/lazy-module/pages/LazyPage01";
+import LazyPage02 from "../modules/lazy-module/pages/LazyPage02";
+import LazyPage03 from "../modules/lazy-module/pages/LazyPage03";
+import NotFound404 from "../pages/common/NotFound404";
+
+import { routes } from "./routes";
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <div className="main-layout">
         <nav>
           <img src={icon} alt="react-logo" className="main-icon" />
+          <hr />
+          <h4 className="navbar-section-title">Lazy Loading</h4>
           <ul>
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) => (isActive ? "nav-active" : "")}
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/about"
-                className={({ isActive }) => (isActive ? "nav-active" : "")}
-              >
-                About
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) => (isActive ? "nav-active" : "")}
-              >
-                Contact
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/users"
-                className={({ isActive }) => (isActive ? "nav-active" : "")}
-              >
-                Users
-              </NavLink>
-            </li>
+            {routes
+              .filter((route) => route.type === "lazy")
+              .map(({ id, component: Component, to, name }) => (
+                <li key={id}>
+                  <NavLink
+                    to={to}
+                    className={({ isActive }) => (isActive ? "nav-active" : "")}
+                  >
+                    {name}
+                  </NavLink>
+                </li>
+              ))}
+          </ul>
+
+          <h4 className="navbar-section-title">Eager Loading</h4>
+          <ul>
+            {routes
+              .filter((route) => route.type === "eager")
+              .map(({ to, name }) => (
+                <li>
+                  <NavLink
+                    to={to}
+                    className={({ isActive }) => (isActive ? "nav-active" : "")}
+                  >
+                    {name}
+                  </NavLink>
+                </li>
+              ))}
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
-          <Route path="/about" element={<h1>About</h1>} />
-          <Route path="/contact" element={<h1>Contact</h1>} />
-          <Route path="/users" element={<h1>Users</h1>} />
+          {/* Lazy Loading*/}
+          {routes
+            .filter((route) => route.type === "lazy")
+            .map(({ id, path, component: Component }) => (
+              <Route key={id} path={path} element={<Component />} />
+            ))}
 
-          <Route path="/*" element={<h1>404-not-found</h1>} />
+          {/* Eager Loading */}
+
+          {routes
+            .filter((route) => route.type === "eager")
+            .map(({ id, path, component: Component }) => (
+              <Route key={id} path={path} element={<Component />} />
+            ))}
+
+          {/* No matching route */}
+          <Route path="/*" element={<NotFound404 />} />
         </Routes>
       </div>
     </BrowserRouter>
