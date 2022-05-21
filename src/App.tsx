@@ -1,23 +1,13 @@
-import { Fragment, useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import CounterAndClicks from "./components/CounterAndClicks";
-import BasicCounter from "./components/BasicCounter";
+import AppRouter from "./routers/AppRouter";
+import { Fragment } from "react";
 
-function App() {
+const App = () => {
   return (
-    <>
-      <h2>Basic counter</h2>
-      <div className="m-2">
-        <BasicCounter />
-      </div>
-
-      <h2>Counter with clicks</h2>
-      <div className="m-2">
-        <CounterAndClicks initialValue={2} />
-      </div>
-    </>
+    <Fragment>
+      <AppRouter />
+    </Fragment>
   );
-}
+};
 
 export default App;
